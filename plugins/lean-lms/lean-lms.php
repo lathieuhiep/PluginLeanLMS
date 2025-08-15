@@ -12,6 +12,9 @@
  * Requires at least: 6.0
  */
 
+use LeanLMS\PostType\CoursePostType;
+use LeanLMS\PostType\LessonPostType;
+
 defined('ABSPATH') || exit;
 
 /*
@@ -40,3 +43,18 @@ spl_autoload_register(function (string $class) {
  * Initialize the LeanLMS plugin
  * */
 add_action('plugins_loaded', ['LeanLMS\Core\Plugin', 'init']);
+
+/*
+ * Register custom post types and taxonomies
+ * */
+register_activation_hook(__FILE__, function () {
+    CoursePostType::init();
+    LessonPostType::init();
+
+    flush_rewrite_rules();
+});
+
+// Register deactivation hook to clean up
+register_deactivation_hook(__FILE__, function () {
+    flush_rewrite_rules();
+});

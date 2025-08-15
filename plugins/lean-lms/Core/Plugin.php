@@ -23,7 +23,10 @@ class Plugin
         // register custom post types
         add_action('init', [self::class, 'register_custom_post_types']);
 
-        //
+        // load template loader
+        TemplateLoader::boot();
+
+        // add amin menu and submenus
         add_action('admin_menu', [MenuManager::class, 'init']);
     }
 
