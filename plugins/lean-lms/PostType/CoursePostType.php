@@ -17,11 +17,25 @@ class CoursePostType
     public const TEMPLATE_ARCHIVE = 'archive-course.php';
     public const TEMPLATE_TAX_CAT = 'taxonomy-course-category.php';
 
+    /**
+     * Initialize the Course Post Type
+     *
+     * This method hooks into WordPress actions to register the custom post type
+     * and its taxonomy, and to add a custom filter for the taxonomy in the admin area.
+     *
+     * @return void
+     */
     public static function init(): void
+    {
+        add_action('init', [__CLASS__, 'register_ctp']);
+        add_action('init', [__CLASS__, 'register_tax_cat']);
+        add_action('admin_init', [__CLASS__, 'add_tax_cat_filter']);
+    }
+
+    public static function register_now(): void
     {
         self::register_ctp();
         self::register_tax_cat();
-        self::add_tax_cat_filter();
     }
 
     /**
@@ -29,7 +43,7 @@ class CoursePostType
      *
      * @return void
      */
-    protected static function register_ctp(): void
+    public static function register_ctp(): void
     {
         if ( post_type_exists(self::POST_TYPE) ) {
             return; // If the post type already exists, no need to register again
@@ -64,7 +78,7 @@ class CoursePostType
      *
      * @return void
      */
-    protected static function register_tax_cat(): void
+    public static function register_tax_cat(): void
     {
         if ( taxonomy_exists(self::TAX_CAT) ) {
             return; // If the taxonomy already exists, no need to register again
@@ -104,7 +118,7 @@ class CoursePostType
      *
      * @return void
      */
-    protected static function add_tax_cat_filter(): void
+    public static function add_tax_cat_filter(): void
     {
         (new Functions)->add_custom_taxonomy_filter_to_cpt(self::POST_TYPE, self::TAX_CAT);
     }

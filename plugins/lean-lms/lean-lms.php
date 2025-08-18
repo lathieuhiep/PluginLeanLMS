@@ -12,8 +12,7 @@
  * Requires at least: 6.0
  */
 
-use LeanLMS\PostType\CoursePostType;
-use LeanLMS\PostType\LessonPostType;
+use LeanLMS\Core\Installer;
 
 defined('ABSPATH') || exit;
 
@@ -39,20 +38,35 @@ spl_autoload_register(function (string $class) {
     }
 });
 
+register_activation_hook(__FILE__, ['LeanLMS\Core\Installer', 'activate']);
+
 /*
  * Initialize the LeanLMS plugin
  * */
 add_action('plugins_loaded', ['LeanLMS\Core\Plugin', 'init']);
 
 /*
- * Register custom post types and taxonomies
+ * Run migrations and upgrades if needed
  * */
-register_activation_hook(__FILE__, function () {
-    CoursePostType::init();
-    LessonPostType::init();
+add_action('plugins_loaded', function () {
+    if (is_admin()) {
+        Installer::maybe_upgrade();
+    }
+}, 5);
 
-    flush_rewrite_rules();
-});
+/*
+ * Hook after plugin update via WordPress Upgrader
+ */
+add_action('upgrader_process_complete', function ($upgrader, $hook_extra) {
+    if (($hook_extra['type'] ?? null) !== 'plugin') return;
+    if (($hook_extra['action'] ?? null) !== 'update') return;
+
+    $this_plugin = plugin_basename(__FILE__);
+    $updated = $hook_extra['plugins'] ?? [];
+    if (in_array($this_plugin, $updated, true)) {
+        Installer::maybe_upgrade();
+    }
+}, 10, 2);
 
 // Register deactivation hook to clean up
 register_deactivation_hook(__FILE__, function () {

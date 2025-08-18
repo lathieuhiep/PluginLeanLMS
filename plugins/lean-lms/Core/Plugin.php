@@ -21,7 +21,7 @@ class Plugin
         add_action('plugins_loaded', [self::class, 'load_text_domain']);
 
         // register custom post types
-        add_action('init', [self::class, 'register_custom_post_types']);
+        self::register_custom_post_types();
 
         // load template loader
         TemplateLoader::boot();
