@@ -69,7 +69,7 @@ class LessonPostType
             'menu_position' => 6,
             'menu_icon' => 'dashicons-media-text',
             'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-            'show_in_rest' => true,
+            'show_in_rest' => false,
             'show_in_menu' => true,
         ]);
     }

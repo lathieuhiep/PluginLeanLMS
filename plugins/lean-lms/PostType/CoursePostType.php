@@ -68,7 +68,7 @@ class CoursePostType
             'menu_position' => 5,
             'menu_icon' => 'dashicons-welcome-learn-more',
             'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-            'show_in_rest' => true,
+            'show_in_rest' => false,
             'show_in_menu' => true,
         ]);
     }

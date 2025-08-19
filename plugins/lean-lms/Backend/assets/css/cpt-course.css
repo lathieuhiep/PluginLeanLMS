@@ -1,0 +1,25 @@
+#lean-lms-section-template {
+    margin-top: 10px;
+}
+
+.lean-section {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.lean-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-title-input {
+    width: 70%;
+    padding: 4px 6px;
+}
+
+.lean-section-body {
+    margin-top: 8px;
+}
