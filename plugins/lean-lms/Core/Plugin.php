@@ -60,14 +60,14 @@ class Plugin
 
             wp_enqueue_style(
                 'cpt-course-admin',
-                Constants::url() . 'Backend/assets/css/cpt-course.css',
+                Constants::url() . 'assets/css/backend/cpt-course.css',
                 [],
                 '1.0'
             );
 
             wp_enqueue_script(
                 'cpt-course-admin',
-                Constants::url() . 'Backend/assets/js/cpt-course.js',
+                Constants::url() . 'assets/js/backend/cpt-course.js',
                 ['jquery'],
                 '1.0',
                 true
